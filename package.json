@@ -1,0 +1,16 @@
+{
+  "name": "ProAngularJS",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hanna Eismant <hanna.eismant@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-wiredep": "^2.0.0",
+    "load-grunt-tasks": "^3.1.0"
+  }
+}

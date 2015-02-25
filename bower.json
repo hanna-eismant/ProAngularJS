@@ -1,0 +1,22 @@
+{
+  "name": "ProAngularJS",
+  "version": "0.0.1",
+  "authors": [
+    "Hanna Eismant <hanna.eismant@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.14",
+    "bootstrap": "~3.3.2"
+  }
+}

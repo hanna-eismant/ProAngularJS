@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="home">
+<head>
+    <title>First Test</title>
+
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbower -->
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+
+    <script src="app/app.js"></script>
+    <script src="app/HomeController.js"></script>
+</head>
+<body>
+    <div ng-controller="HomeController as vm">
+        {{vm.message}}
+    </div>
+</body>
+</html>
