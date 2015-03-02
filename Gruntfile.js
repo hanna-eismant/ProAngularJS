@@ -45,6 +45,7 @@ module.exports = function (grunt) {
 
     // Регестрируем таску, которую можно вызвать с консоли. По сути, под одним названием мы запускаем другие в указанном порядке.
     grunt.registerTask('server', [
+        'wiredep',
         'connect',
         'watch'
     ]);
