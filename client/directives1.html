@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="directives1App">
+<head>
+    <title>Directives 1</title>
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
+    <!-- endbower -->
+
+    <style>
+        td > *:first-child {
+            font-weight: bold
+        }
+
+        tr.Red {
+            background-color: lightcoral
+        }
+
+        tr.Green {
+            background-color: lightgreen
+        }
+
+        tr.Blue {
+            background-color: lightblue
+        }
+
+    </style>
+
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <!-- endbower -->
+
+    <script>
+        angular.module("directives1App", [])
+                .controller("defaultCtrl", function ($scope) {
+                    $scope.todos = [
+                        {action: "Get groceries", complete: true},
+                        {action: "Call plumber", complete: false},
+                        {action: "Buy running shoes", complete: true},
+                        {action: "Buy flowers", complete: true},
+                        {action: "Call family", complete: true}
+                    ];
+
+                    $scope.buttonNames = ["Red", "Green", "Blue"];
+
+                    $scope.settings = {
+                        Rows: "Red",
+                        Columns: "Green"
+                    };
+
+                    $scope.data = {};
+
+                    $scope.handleEvent = function (e) {
+                        console.log("Event type: " + e.type);
+                        $scope.data.columnColor = e.type == "mouseenter" ? "Green" : "Blue";
+                    };
+
+                    $scope.dataValue = false;
+                })
+                .directive("tap", function () {
+                    return function (scope, elem, attrs) {
+                        elem.on("touchstart touchend", function () {
+                            scope.$apply(attrs["tap"]);
+                        });
+                    };
+                });
+
+    </script>
+
+
+</head>
+<body ng-cloak>
+
+<div id="todoPanel" class="panel" ng-controller="defaultCtrl">
+    <h3 class="panel-header">ToDo List</h3>
+
+    <div class="checkbox well">
+        <label>
+            <input type="checkbox" ng-model="dataValue">
+            Set the Data Value
+        </label>
+    </div>
+
+    <button class="btn btn-success" ng-disabled="dataValue">My Button</button>
+
+    <div class="well" tap="message='Tapped!'">
+        {{message}}
+    </div>
+
+    <div class="well">
+        <span ng-repeat="button in buttonNames">
+            <button class="btn btn-info" ng-click="data.rowColor = button">
+                {{button}}
+            </button>
+        </span>
+    </div>
+
+    <div class="row well">
+        <div class="col-xs-6" ng-repeat="(key, val) in settings">
+            <h4>{{key}}</h4>
+
+            <div class="radio" ng-repeat="button in buttonNames">
+                <label>
+                    <input type="radio" ng-model="settings[key]" value="{{button}}">
+                    {{button}}
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkbox well">
+        <label>
+            <input type="checkbox" ng-model="todos[2].complete">
+            Item 3 is complete
+
+        </label>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Action</th>
+            <th>Done</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in todos | filter: {complete: 'true'}" ng-class="data.rowColor"
+            ng-mouseenter="handleEvent($event)" ng-mouseleave="handleEvent($event)">
+            <td>{{$index + 1}}</td>
+            <td ng-class="data.columnColor">{{item.action}}</td>
+            <td ng-style="{'background-color': settings.Columns}">
+                <span ng-if="!item.complete">(Incomplete)</span>
+                <span ng-if="item.complete">(Done)</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
