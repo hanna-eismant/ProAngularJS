@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="scopelessControllerApp">
+<head>
+    <title>Controller</title>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
+    <!-- endbower -->
+
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <!-- endbower -->
+
+    <script>
+        var app = angular.module("scopelessControllerApp", []);
+
+        app.controller("defaultCtrl", function () {
+            this.dataValue = "Hello, Hanna!";
+
+            this.reverseText = function () {
+                this.dataValue = this.dataValue.split("").reverse().join("");
+            };
+        });
+
+    </script>
+
+</head>
+
+<body>
+<div class="well" ng-controller="defaultCtrl as ctrl">
+    <h4>Controller</h4>
+
+    <div class="input-group">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="ctrl.reverseText()">
+                Reverse
+            </button>
+        </span>
+        <input class="form-control" ng-model="ctrl.dataValue"/>
+    </div>
+</div>
+</body>
+
+</html>
