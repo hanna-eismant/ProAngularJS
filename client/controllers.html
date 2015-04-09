@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="controllersApp">
+<head>
+    <title>Controllers</title>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.css" />
+    <!-- endbower -->
+
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <!-- endbower -->
+
+    <script>
+        angular.module("controllersApp", {})
+                .controller("defaultCtrl", function ($scope, $rootScope) {
+                    $scope.$on("zipCodeUpdated", function (event, args) {
+                        $scope[args.type] = args.zipCode;
+                    });
+
+                    $scope.setAddress = function (type, zip) {
+                        $rootScope.$broadcast("zipCodeUpdated", {
+                            type: type,
+                            zipCode: zip
+                        });
+                        console.log("Type: " + type + " " + zip);
+                    };
+
+                    $scope.copyAddress = function () {
+                        $scope.zip = $scope.billingZip;
+                    };
+                });
+    </script>
+
+
+</head>
+<body ng-cloak>
+<div class="row">
+    <div class="col-xs-4">
+        <div class="well" ng-controller="defaultCtrl">
+            <h4>Billing Zip Code</h4>
+
+            <div class="form-group">
+                <input class="form-control" ng-model="zip"/>
+            </div>
+            <button class="btn btn-primary" ng-click="setAddress('billingZip', zip)">
+                Save Billing
+            </button>
+        </div>
+    </div>
+    <div class="col-xs-4">
+
+        <div class="well" ng-controller="defaultCtrl">
+            <h4>Shipping Zip Code</h4>
+
+            <div class="form-group">
+                <input class="form-control" ng-model="zip"/>
+            </div>
+            <button class="btn btn-primary" ng-click="copyAddress()">
+                Use Billing
+            </button>
+            <button class="btn btn-primary" ng-click="setAddress('shippingZip', zip)">
+                Save Shipping
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
