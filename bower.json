@@ -19,7 +19,8 @@
     "bootstrap": "~3.3.2",
     "angular": "~1.3.14",
     "angular-route": "~1.3.14",
-    "angular-resource": "~1.3.14"
+    "angular-resource": "~1.3.14",
+    "jquery-ui": "~1.11.4"
   },
   "overrides": {
     "bootstrap": {
@@ -32,6 +33,12 @@
         "dist/fonts/glyphicons-halflings-regular.svg",
         "dist/fonts/glyphicons-halflings-regular.ttf",
         "dist/fonts/glyphicons-halflings-regular.woff"
+      ]
+    },
+    "jquery-ui": {
+      "main": [
+        "jquery-ui.js",
+        "themes/base/jquery-ui.css"
       ]
     }
   }
