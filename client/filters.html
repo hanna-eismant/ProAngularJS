@@ -57,6 +57,36 @@
                     $scope.myCustomSorter = function (item) {
                         return item.expiry < 5 ? 0 : item.price;
                     };
+                })
+                .filter("labelCase", function() {
+                    return function (value, reverse) {
+                        if (angular.isString(value)) {
+                            var intermediate = reverse ? value.toUpperCase() : value.toLowerCase();
+                            var buf = intermediate[0];
+                            return (reverse ? buf.toLowerCase() : buf.toUpperCase()) + intermediate.substr(1);
+                        } else {
+                            return value;
+                        }
+                    };
+                })
+                .filter("skip", function () {
+                    return function (data, count) {
+                        if (angular.isArray(data) && angular.isNumber(count)) {
+                            if (count > data.length || count < 1) {
+                                return data;
+                            } else {
+                                return data.slice(count);
+                            }
+                        } else {
+                            return data;
+                        }
+                    };
+                })
+                .filter("take", function ($filter) {
+                    return function (data, skipCount, takeCount) {
+                        var skippedData = $filter("skip")(data, data);
+                        return $filter("limitTo")(skippedData, takeCount);
+                    };
                 });
     </script>
 
@@ -84,9 +114,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="p in products | filter:selectItems | limitTo:limitVal | orderBy:[myCustonSorter, '-price']">
-                <td>{{p.name | uppercase}}</td>
-                <td>{{p.category | lowercase}}</td>
+            <tr ng-repeat="p in products | take:2:5">
+                <td>{{p.name | labelCase}}</td>
+                <td>{{p.category | labelCase:true}}</td>
                 <td>{{getExpiryDate(p.expiry) | date: "fullDate"}}</td>
                 <td class="text-right">{{p.price | currency}}</td>
             </tr>
