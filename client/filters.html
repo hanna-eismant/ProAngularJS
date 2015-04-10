@@ -41,6 +41,22 @@
                         var now = new Date();
                         return now.setDate(now.getDate() + days);
                     };
+
+                    $scope.limitVal = "5";
+                    $scope.limitRange = [];
+
+                    for (var i = (0 - $scope.products.length); i <= $scope.products.length; i++) {
+                        $scope.limitRange.push(i.toString());
+                    }
+
+                    $scope.selectItems = function (item) {
+//                        return item.category == "Fish" || item.name == "Beer";
+                          return true;
+                    };
+
+                    $scope.myCustomSorter = function (item) {
+                        return item.expiry < 5 ? 0 : item.price;
+                    };
                 });
     </script>
 
@@ -55,6 +71,9 @@
         </h3>
     </div>
     <div class="panel-body">
+        Limit: <select ng-model="limitVal" ng-options="item for item in limitRange"></select>
+    </div>
+    <div class="panel-body">
         <table class="table table-stripped table-bordered table-condensed">
             <thead>
             <tr>
@@ -65,7 +84,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="p in products">
+            <tr ng-repeat="p in products | filter:selectItems | limitTo:limitVal | orderBy:[myCustonSorter, '-price']">
                 <td>{{p.name | uppercase}}</td>
                 <td>{{p.category | lowercase}}</td>
                 <td>{{getExpiryDate(p.expiry) | date: "fullDate"}}</td>
