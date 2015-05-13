@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="directiveScopesApp">
+<head>
+    <title>Directive Scopes</title>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="../bower_components/jquery-ui/themes/base/jquery-ui.css"/>
+    <!-- endbower -->
+
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../bower_components/angular-i18n/angular-locale_ru-ru.js"></script>
+    <!-- endbower -->
+
+    <script type="text/ng-template" id="scopeTemplate">
+        <div class="panel-body">
+            <p>Name: <input ng-model="data.name"/></p>
+            <p>City: <input ng-model="city"/></p>
+            <p>Country: <input ng-model="country"/></p>
+        </div>
+    </script>
+
+    <script>
+        angular.module('directiveScopesApp', [])
+                .directive('scopeDemo', function () {
+                    return {
+                        scope: {},
+                        template: function () {
+                            return angular.element(document.querySelector('#scopeTemplate')).html();
+                        }
+                    };
+                })
+                .controller('mainController', function ($scope) {
+                    $scope.data = {name: 'Hanna'};
+                    $scope.city = 'Hrodna';
+                });
+    </script>
+
+</head>
+<body ng-cloak ng-controller="mainController">
+<div class="panel panel-default">
+    <div class="panel-body" scope-demo></div>
+    <div class="panel-body" scope-demo></div>
+</div>
+</body>
+</html>
