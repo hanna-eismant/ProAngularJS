@@ -21,9 +21,9 @@
 
     <script type="text/ng-template" id="scopeTemplate">
         <div class="panel-body">
-            <p>Name: <input ng-model="data.name"/></p>
-            <p>City: <input ng-model="city"/></p>
-            <p>Country: <input ng-model="country"/></p>
+            <p>Data Value 1: {{local1}}</p>
+            <p>Data Value 2: <input ng-model="local2"/></p>
+            <p>City: {{cityFn()}}</p>
         </div>
     </script>
 
@@ -31,23 +31,38 @@
         angular.module('directiveScopesApp', [])
                 .directive('scopeDemo', function () {
                     return {
-                        scope: {},
+                        scope: {
+                            local1: '@nameprop1',
+                            local2: '=nameprop2',
+                            cityFn: '&city'
+                        },
                         template: function () {
                             return angular.element(document.querySelector('#scopeTemplate')).html();
                         }
                     };
                 })
                 .controller('mainController', function ($scope) {
-                    $scope.data = {name: 'Hanna'};
+                    $scope.data = {name1: 'Hanna'};
                     $scope.city = 'Hrodna';
+
+                    $scope.getCity = function (name) {
+                        return name === 'Hanna' ? $scope.city : 'London';
+                    };
                 });
     </script>
 
 </head>
 <body ng-cloak ng-controller="mainController">
 <div class="panel panel-default">
-    <div class="panel-body" scope-demo></div>
-    <div class="panel-body" scope-demo></div>
+    <div class="panel-body">
+        <p>Direct Binding 1: <input ng-model="data.name1"/></p>
+        <p>Direct Binding 2: <input ng-model="data.name2"/></p>
+    </div>
+
+    <div class="panel-body" scope-demo
+         city="getCity(data.name1)"
+         nameprop1="{{data.name1}}"
+         nameprop2="data.name2"></div>
 </div>
 </body>
 </html>
