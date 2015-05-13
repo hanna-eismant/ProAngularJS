@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jqliteApp">
+<head>
+    <title>jqLite</title>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="../bower_components/jquery-ui/themes/base/jquery-ui.css"/>
+    <!-- endbower -->
+
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../bower_components/angular-i18n/angular-locale_ru-ru.js"></script>
+    <!-- endbower -->
+
+    <script>
+        angular.module("jqliteApp", [])
+                .controller("mainController", function ($scope) {
+                    $scope.names = ['Apples', 'Bananas', 'Oranges'];
+                })
+                .directive("superDirective", function () {
+                    return function (scope, element, attrs) {
+                        var listElem = angular.element('<ol>');
+                        element.append(listElem);
+                        for (var i = 0; i < scope.names.length; i++) {
+                            listElem.append(angular.element('<li>')
+                                    .append(angular.element('<span>').text(scope.names[i])));
+                        }
+                        var buttons = element.find('button');
+                        buttons.on('click', function (e) {
+                            element.find('li').toggleClass('bold');
+                        });
+                    };
+                });
+    </script>
+
+
+</head>
+<body ng-cloak ng-controller="mainController">
+<h3>Fruit</h3>
+
+<div super-directive>
+    <button>Click Me!</button>
+</div>
+</body>
+</html>
